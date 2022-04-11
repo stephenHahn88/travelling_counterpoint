@@ -1,5 +1,6 @@
 PVector cartesianToSpherical(float x, float y, float z) {
   // x, y corresponds to map location. z is radius
+  z = GRID_SPACE*10;
   float longitude = x / z;
   float latitude = (float)(2 * atan(exp(y/z)) - PI/2);
   return new PVector(z * cos(latitude) * cos(longitude), z * cos(latitude) * sin(longitude), z * sin(latitude));
@@ -78,4 +79,29 @@ int calculateCrunch(int b, int a, int s) {
     }
   }
   return dissonances+1;
+}
+
+int[] toIntArray(Integer[] ia) {
+  int[] answer = new int[ia.length];
+  for (int i=0; i<ia.length; i++) {
+    answer[i] = ia[i];
+  }
+  return answer;
+}
+
+Duration quarterLengthToDuration(float quarterLength) {
+  switch ((int)(1000*quarterLength)) {
+    case 125: return Duration.T;
+    case 250: return Duration.S;
+    case 375: return Duration.DS;
+    case 500: return Duration.E;
+    case 750: return Duration.DE;
+    case 1000: return Duration.Q;
+    case 1500: return Duration.DQ;
+    case 2000: return Duration.H;
+    //case 3000: return Duration.DH;
+    //case 4000: return Duration.W;
+    //case 6000: return Duration.DW;
+    default: return Duration.Q;
+  }
 }
