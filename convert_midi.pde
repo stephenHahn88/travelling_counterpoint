@@ -1,57 +1,46 @@
 import java.io.File;
-
-import javax.sound.midi.MidiEvent;
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Track;
-
+import java.util.Scanner;
 
 void midiToContrapuntalMotions(String filepath) throws Exception {
-  String path = dataPath(filepath);
-  final int NOTE_ON = 0x90;
+  ArrayList<Integer[]> notes = new ArrayList<>(); 
+  ArrayList<Float> durations = new ArrayList<>();
+  File file = new File(filepath);
+  Scanner sc = new Scanner(file);
+  while (sc.hasNextLine()) {
+    String line = sc.nextLine();
+    String[] parts = line.split("\t");
+    Integer[] newNotes = new Integer[3];
+    newNotes[0] = Integer.parseInt(parts[0]);
+    newNotes[1] = Integer.parseInt(parts[1]);
+    newNotes[2] = Integer.parseInt(parts[2]);
+    notes.add(newNotes);
+    durations.add(Float.parseFloat(parts[3]));
+  }
+  sc.close();
+  for (Integer[] ints: notes) {
+    int[] i = toIntArray(ints);
+    System.out.println(String.format("%d %d %d", i[0], i[1], i[2]));
+  }
+  System.out.println(durations.toString());
+  for (int i=0; i < durations.size()-1; i++) {
+    int[] startNotes = toIntArray(notes.get(i));
+    int[] endNotes = toIntArray(notes.get(i+1));
+    Coordinate startCoord = coordFromNotes(startNotes);
+    Coordinate endCoord = coordFromNotes(endNotes);
+    PVector startCoordSphere = cartesianToSpherical(startCoord.x, startCoord.y, startCoord.z);
+    PVector endCoordSphere = cartesianToSpherical(endCoord.x, endCoord.y, endCoord.z);
+    Duration dur = quarterLengthToDuration(durations.get(i));
+    contrapuntalMotions.add(new ContrapuntalMotion(startNotes, endNotes, dur));
+    contrapuntalMotionsSphere.add(
+      new ContrapuntalMotion(
+        new Coordinate(startCoordSphere.x, startCoordSphere.y, startCoordSphere.z),
+        new Coordinate(endCoordSphere.x, endCoordSphere.y, endCoordSphere.z),
+        dur, startNotes, endNotes
+      )
+    );
+  }
   
-  ArrayList<ArrayList<Integer>> voices = new ArrayList<>();
-  ArrayList<ArrayList<Integer>> times = new ArrayList<>();
-  for (int i=0; i<3; i++) {
-    voices.add(new ArrayList<Integer>());
-    times.add(new ArrayList<Integer>());
-  }
-  Sequence sequence = MidiSystem.getSequence(new File(path));
-  int trackNumber = 0;
-  for (Track track: sequence.getTracks()) {
-    trackNumber++;
-    if (trackNumber >= 3) {
-      break;
-    }
-    for (int i=0; i<track.size(); i++) {
-      MidiEvent event = track.get(i);
-      MidiMessage message = event.getMessage();
-      if (message instanceof ShortMessage) {
-        ShortMessage sm = (ShortMessage) message;
-        if (sm.getCommand() == NOTE_ON) {
-          voices.get(trackNumber - 1).add(sm.getData1());
-          times.get(trackNumber - 1).add((Integer) round(event.getTick()));
-        }
-      }
-    }
-  }
-  for (int i = 0; i<3; i++) {
-    System.out.println(voices.get(i).toString());
-    System.out.println(times.get(i).toString());
-  }
 }
-
-
-
-
-
-
-
-
-
-
 
 void bach_aof() {
   int[] s1 = {45, 69, 77}; 
