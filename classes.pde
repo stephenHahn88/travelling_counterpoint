@@ -141,9 +141,9 @@ class Swirl {
       float lat = map(i, 0, this.total, 0, PI);
       for (int j = 0; j < this.total+1; j++) {
         float lon = map(j, 0, this.total, 0, TWO_PI);
-        float x = this.radius * sin(lat) * cos(lon);
-        float y = this.radius * sin(lat) * sin(lon);
-        float z = this.radius * cos(lat);
+        float x = this.radius * sin(lat) * cos(lon) + (crunch * (float)Math.random() * 10);
+        float y = this.radius * sin(lat) * sin(lon) + (crunch * (float)Math.random() * 10);
+        float z = this.radius * cos(lat) + (crunch * (float)Math.random() * 10);
         this.globe[i][j] = new PVector(x,y,z);
       }
     }
