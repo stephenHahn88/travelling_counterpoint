@@ -15,7 +15,7 @@ int GRID_SPACE = 30;
 int MAX_SPACE = NUM_GRID_LINES * GRID_SPACE;
 int CENTER_NOTE = 60; //Uses midi pitch numbers (60 is middle C)
 int[] ORIGINAL_VOICE_NOTES = {57,60,64};
-int TEMPO = 120; //In quarters per minute
+int TEMPO = 88; //In quarters per minute
 
 Minim minim;
 AudioPlayer[] notes = new AudioPlayer[73];
@@ -59,11 +59,11 @@ void setup() {
   //}
   
   //bach_aof();
-  //try {
-  //  midiToContrapuntalMotions("bach_cm.mid");
-  //} catch (Exception e) {
-  //  e.printStackTrace();
-  //}
+  try {
+    midiToContrapuntalMotions("C:\\Users\\sxh616_\\Documents\\Processing\\travelling_counterpoint\\data\\test.txt");
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
 }
 
 void captureEvent(Capture cam) {
