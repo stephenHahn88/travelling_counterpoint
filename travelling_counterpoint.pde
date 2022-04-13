@@ -1,6 +1,8 @@
 import ddf.minim.Minim;
 import ddf.minim.AudioPlayer;
 
+import peasy.*;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +22,7 @@ int TEMPO = 88; //In quarters per minute
 Minim minim;
 AudioPlayer[] notes = new AudioPlayer[73];
 
-Capture cam;
+PeasyCam cam;
 
 Voice currVoice = Voice.BASS;
 Duration currDuration = Duration.Q;
@@ -42,6 +44,8 @@ void setup() {
   size(1000, 1000, P3D);
   stroke(255);
   strokeWeight(2);
+  cam = new PeasyCam(this, 100);
+  cam.setMinimumDistance(50);
   minim = new Minim(this);
   for (int i=0; i < notes.length; i++) {
     notes[i] = minim.loadFile((i+21) + ".mp3");
@@ -60,7 +64,9 @@ void setup() {
   
   //bach_aof();
   try {
-    midiToContrapuntalMotions("C:\\Users\\sxh616_\\Documents\\Processing\\travelling_counterpoint\\data\\test.txt");
+    midiToContrapuntalMotions("C:\\Users\\sh597\\Desktop\\travelling_counterpoint\\data\\bach_bm_excerpt.txt");
+    midiToContrapuntalMotions("C:\\Users\\sh597\\Desktop\\travelling_counterpoint\\data\\test.txt");
+    //midiToContrapuntalMotions("C:\\Users\\sh597\\Desktop\\travelling_counterpoint\\data\\bach_dsharpm_excerpt.txt");
   } catch (Exception e) {
     e.printStackTrace();
   }
@@ -73,8 +79,8 @@ void captureEvent(Capture cam) {
 void draw() {
   background(0);
   translate(width/2, height/2, 0);
-  rotateY(map(mouseX, 0, width, -PI, PI));
-  rotateX(map(mouseY, 0, height, -PI, PI));
+  //rotateY(map(mouseX, 0, width, -PI, PI));
+  //rotateX(map(mouseY, 0, height, -PI, PI));
   //translate(-100,100,-100);
   stroke(255);
   sphere(GRID_SPACE / 2);

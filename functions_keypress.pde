@@ -18,6 +18,10 @@ void keyPressed() {
       break;
     case 'p': loopPlayToggle();
       break;
+    case 't': TEMPO = TEMPO - 4;
+      break;
+    case 'y': TEMPO = TEMPO + 4;
+      break;
     case BACKSPACE: 
       contrapuntalMotions.clear();
       contrapuntalMotionsSphere.clear();
