@@ -1,6 +1,6 @@
 PVector cartesianToSpherical(float x, float y, float z) {
   // x, y corresponds to map location. z is radius
-  z = GRID_SPACE*10;
+  //z = GRID_SPACE*10;
   float longitude = x / z;
   float latitude = (float)(2 * atan(exp(y/z)) - PI/2);
   return new PVector(z * cos(latitude) * cos(longitude), z * cos(latitude) * sin(longitude), z * sin(latitude));

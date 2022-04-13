@@ -64,12 +64,14 @@ void setup() {
   
   //bach_aof();
   try {
-    midiToContrapuntalMotions("C:\\Users\\sh597\\Desktop\\travelling_counterpoint\\data\\bach_bm_excerpt.txt");
-    midiToContrapuntalMotions("C:\\Users\\sh597\\Desktop\\travelling_counterpoint\\data\\test.txt");
-    //midiToContrapuntalMotions("C:\\Users\\sh597\\Desktop\\travelling_counterpoint\\data\\bach_dsharpm_excerpt.txt");
+    String path = "C:\\Users\\sxh616_\\Desktop\\Git Projects";
+    //midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\bach_bm_excerpt.txt");
+    midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\test.txt");
+    //midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\bach_dsharpm_excerpt.txt");
   } catch (Exception e) {
     e.printStackTrace();
   }
+  setupReactiveSphere();
 }
 
 void captureEvent(Capture cam) {
@@ -85,6 +87,8 @@ void draw() {
   stroke(255);
   sphere(GRID_SPACE / 2);
   strokeWeight(2);
+  drawReactiveSphere();
+  
   if (gridOn) {drawGrid();}
   strokeWeight(4);
   if (!contrapuntalMotions.isEmpty()) {
