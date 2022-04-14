@@ -23,6 +23,8 @@ Minim minim;
 AudioPlayer[] notes = new AudioPlayer[73];
 
 PeasyCam cam;
+Capture camera;
+PImage prevCamera;
 
 Voice currVoice = Voice.BASS;
 Duration currDuration = Duration.Q;
@@ -50,17 +52,18 @@ void setup() {
   for (int i=0; i < notes.length; i++) {
     notes[i] = minim.loadFile((i+21) + ".mp3");
   }
-  //String[] cameras = Capture.list();
-  //if (cameras.length == 0) {
-  //  println("No cameras available");
-  //  exit();
-  //} else {
-  //  for (int i=0; i < cameras.length; i++) {
-  //    println(cameras[i]);
-  //  }
-  //  cam = new Capture(this, cameras[0]);
-  //  cam.start();
-  //}
+  String[] cameras = Capture.list();
+  if (cameras.length == 0) {
+    println("No cameras available");
+    exit();
+  } else {
+    for (int i=0; i < cameras.length; i++) {
+      println(cameras[i]);
+    }
+    camera = new Capture(this, cameras[0]);
+    camera.start();
+    prevCamera = createImage(100, 100, RGB);
+  }
   
   //bach_aof();
   try {
@@ -74,11 +77,12 @@ void setup() {
   setupReactiveSphere();
 }
 
-void captureEvent(Capture cam) {
-  cam.read();
+void captureEvent(Capture camera) {
+  camera.read();
 }
 
 void draw() {
+  motionCapture();
   background(0);
   translate(width/2, height/2, 0);
   //rotateY(map(mouseX, 0, width, -PI, PI));
@@ -90,16 +94,16 @@ void draw() {
   drawReactiveSphere();
   
   if (gridOn) {drawGrid();}
-  strokeWeight(4);
-  if (!contrapuntalMotions.isEmpty()) {
-    ContrapuntalMotion startCM = contrapuntalMotions.get(0);
-    stroke(255);
-    drawStartSphere(startCM);
-  }
-  drawCounterpoint();
-  stroke(255);
-  if (!contrapuntalMotions.isEmpty()){
-    swirl.drawNow();
-  }
+  //strokeWeight(4);
+  //if (!contrapuntalMotions.isEmpty()) {
+  //  ContrapuntalMotion startCM = contrapuntalMotions.get(0);
+  //  stroke(255);
+  //  drawStartSphere(startCM);
+  //}
+  //drawCounterpoint();
+  //stroke(255);
+  //if (!contrapuntalMotions.isEmpty()){
+  //  swirl.drawNow();
+  //}
   
 }
