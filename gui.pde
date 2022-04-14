@@ -26,7 +26,20 @@ void createBang(String listener, int w, int h, int x, int y, String label) {
     .setSize(w, h)
     .setLabel(label)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-    
+}
+
+void createDurationRadio(String listener, int w, int h, int x, int y) {
+  cp5.addRadioButton(listener)
+    .setPosition(x, y)
+    .setSize(w, h)
+    .setItemsPerRow(5)
+    .setSpacingColumn(25)
+    .addItem("1/32", 0.125)
+    .addItem("1/16", 0.25)
+    .addItem("1/8", 0.5)
+    .addItem("1/4", 1)
+    .addItem("1/2", 2)
+    .activate("1/4");
 }
 
 void setupGUI() {
@@ -40,6 +53,7 @@ void setupGUI() {
   createBang("toggleEvolveBang", 120, 30, 20, 140, "Evolve/Stagnate");
   createSlider("evolveTimeSlider", 200, 30, 20, 180, 300, 5000, 1000, "Milliseconds Between Evolutions");
   
+  //createDurationRadio("durationRadio", 20, 20, 20, height-640);
   createSlider("bassNumberSlider", 40, 500, 20, height-600, 21, 108, 57, "Bass");
   createSlider("altoNumberSlider", 40, 500, 100, height-600, 21, 108, 60, "Alto");
   createSlider("sopranoNumberSlider", 40, 500, 180, height-600, 21, 108, 64, "Soprano");
@@ -72,6 +86,11 @@ void toggleEvolveBang() {
 
 void evolveTimeSlider(int val) {
   EVOLVE_TIME = val;
+}
+
+void durationRadio(float val) {
+  System.out.println(val);
+  currDuration = quarterLengthToDuration(val);
 }
 
 void bassNumberSlider(int val) {

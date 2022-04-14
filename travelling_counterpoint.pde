@@ -12,7 +12,7 @@ import java.lang.Math;
 import processing.sound.*;
 import processing.video.*;
 
-int NUM_GRID_LINES = 30;
+int NUM_GRID_LINES = 58;
 int GRID_SPACE = 30;
 int MAX_SPACE = NUM_GRID_LINES * GRID_SPACE;
 int CENTER_NOTE = 60; //Uses midi pitch numbers (60 is middle C)
