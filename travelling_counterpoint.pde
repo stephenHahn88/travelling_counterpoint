@@ -18,13 +18,12 @@ int MAX_SPACE = NUM_GRID_LINES * GRID_SPACE;
 int CENTER_NOTE = 60; //Uses midi pitch numbers (60 is middle C)
 int[] ORIGINAL_VOICE_NOTES = {57,60,64};
 int TEMPO = 88; //In quarters per minute
+int EVOLVE_TIME = 1000;
 
 Minim minim;
 AudioPlayer[] notes = new AudioPlayer[73];
 
 PeasyCam cam;
-Capture camera;
-PImage prevCamera;
 
 Voice currVoice = Voice.BASS;
 Duration currDuration = Duration.Q;
@@ -37,73 +36,60 @@ Random rand = new Random();
 boolean evolving = false;
 boolean loopPlay = false;
 boolean gridOn = true;
+boolean reactiveSphereOn = false;
 CoordinateMode currCM = CoordinateMode.CARTESIAN;
 ContrapuntalMotion currPlaying = new ContrapuntalMotion();
 
 Swirl swirl = new Swirl(new Coordinate(0,0,0), 20);
 
 void setup() {
-  size(1000, 1000, P3D);
+  size(1800, 1000, P3D);
   stroke(255);
   strokeWeight(2);
+  
   cam = new PeasyCam(this, 100);
   cam.setMinimumDistance(50);
+  
   minim = new Minim(this);
   for (int i=0; i < notes.length; i++) {
     notes[i] = minim.loadFile((i+21) + ".mp3");
   }
-  String[] cameras = Capture.list();
-  if (cameras.length == 0) {
-    println("No cameras available");
-    exit();
-  } else {
-    for (int i=0; i < cameras.length; i++) {
-      println(cameras[i]);
-    }
-    camera = new Capture(this, cameras[0]);
-    camera.start();
-    prevCamera = createImage(100, 100, RGB);
-  }
   
-  //bach_aof();
   try {
-    String path = "C:\\Users\\sxh616_\\Desktop\\Git Projects";
-    //midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\bach_bm_excerpt.txt");
-    midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\test.txt");
+    String path = "C:\\Users\\sh597\\Desktop\\Git Projects";
+    midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\bach_bm_excerpt.txt");
+    //midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\test.txt");
     //midiToContrapuntalMotions(path + "\\travelling_counterpoint\\data\\bach_dsharpm_excerpt.txt");
   } catch (Exception e) {
     e.printStackTrace();
   }
+  
   setupReactiveSphere();
-}
-
-void captureEvent(Capture camera) {
-  camera.read();
+  setupGUI();
 }
 
 void draw() {
-  motionCapture();
   background(0);
+  
   translate(width/2, height/2, 0);
-  //rotateY(map(mouseX, 0, width, -PI, PI));
-  //rotateX(map(mouseY, 0, height, -PI, PI));
-  //translate(-100,100,-100);
+  
   stroke(255);
   sphere(GRID_SPACE / 2);
   strokeWeight(2);
-  drawReactiveSphere();
   
+  if (reactiveSphereOn) {drawReactiveSphere();}
   if (gridOn) {drawGrid();}
-  //strokeWeight(4);
-  //if (!contrapuntalMotions.isEmpty()) {
-  //  ContrapuntalMotion startCM = contrapuntalMotions.get(0);
-  //  stroke(255);
-  //  drawStartSphere(startCM);
-  //}
-  //drawCounterpoint();
-  //stroke(255);
-  //if (!contrapuntalMotions.isEmpty()){
-  //  swirl.drawNow();
-  //}
   
+  strokeWeight(4);
+  if (!contrapuntalMotions.isEmpty()) {
+    ContrapuntalMotion startCM = contrapuntalMotions.get(0);
+    stroke(255);
+    drawStartSphere(startCM);
+  }
+  drawCounterpoint();
+  stroke(255);
+  if (!contrapuntalMotions.isEmpty()){
+    swirl.drawNow();
+  }
+  drawGUI();
 }

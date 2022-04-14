@@ -105,29 +105,9 @@ class Swirl {
     this.radius = startR;
     this.angle = 0;
     this.speed = 0.003;
-    this.total = 8;
+    this.total = 5;
     this.globe = new PVector[total+1][total+1];
   }
-  
-  //void drawNowOld() {
-  //  for (float i=0; i < 10; i++) {
-  //    pushMatrix();
-  //      translate(this.currPosition.x, this.currPosition.y, this.currPosition.z);
-  //      rotateX(TWO_PI*i / 10);
-  //      rotateY(TWO_PI*i / 10);
-  //      rotateZ(TWO_PI*i / 10);
-  //      for (float a = 0; a < 5; a++) {
-  //        translate(this.radius/2, 0, 0);
-  //        rotateX(this.angle);
-  //        rotateY(this.angle);
-  //        rotateZ(this.angle);
-  //        stroke(255, i*20, a*40);
-  //        sphere(0.5);
-  //        this.angle += this.speed;
-  //      }
-  //    popMatrix();
-  //  }
-  //}
   
   void drawNow() {
     int crunch;

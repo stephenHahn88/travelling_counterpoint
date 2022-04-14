@@ -28,6 +28,8 @@ void keyPressed() {
       break;
     case 'g': gridOn = !gridOn;
       break;
+    case '0': reactiveSphereOn = !reactiveSphereOn;
+      break;
     case 'm': changeMode();
       break;
     case '8': evolveToggle();
@@ -77,7 +79,7 @@ void evolve() {
     nmSphere.update(nm);
     cmSphere.toSpherical();
     nmSphere.toSpherical();
-    delay(1000);
+    delay(EVOLVE_TIME);
   }
 }
 
@@ -120,12 +122,7 @@ void enterPress() {
     swirl.currPosition = newSpherical.end;
   }
   currPlaying = newCM;
-  AudioPlayer[] aps = playHarmony(currVoiceNotes);
-  
-  //delay(3000);
-  //pauseHarmony(aps);
-  
-  
+  AudioPlayer[] aps = playHarmony(currVoiceNotes);  
 }
 
 void changeDuration() {

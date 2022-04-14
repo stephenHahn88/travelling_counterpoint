@@ -1,15 +1,15 @@
 int cols, rows;
 int scl = 200;
-int w = 3000;
-int h = 3000;
+int w = 3500;
+int h = 3500;
 int crunchFactor = 10;
 int jitterFactor = 3;
 
 float[][] reactiveSphere;
 
 void setupReactiveSphere() {
-  cols = (w+scl*2) / scl;
-  rows = (h+scl*2) / scl;
+  cols = (w+scl*5) / scl;
+  rows = (h+scl*5) / scl;
   reactiveSphere = new float[cols][rows];
 }
 
@@ -26,13 +26,13 @@ void drawReactiveSphere() {
   for (int y = 0; y < rows; y++) {
     float xoff = 0;
     for (int x = 0; x < cols; x++) {
-      reactiveSphere[x][y] = map(noise(xoff, yoff), 0, 1, 800 - rand.nextInt(jitterFactor)*crunch*crunchFactor, 1200 + rand.nextInt(jitterFactor)*crunch*crunchFactor);
+      reactiveSphere[x][y] = map(noise(xoff, yoff), 0, 1, 1200 - rand.nextInt(jitterFactor)*crunch*crunchFactor, 1400 + rand.nextInt(jitterFactor)*crunch*crunchFactor);
       xoff += 0.1;
     }
     yoff += 0.1;
   }
   
-  stroke(100, 50, 0);
+  stroke(100, 100, 200, 50);
   noFill();
   
   //translate(width/2, height/2);

@@ -17,11 +17,11 @@ void midiToContrapuntalMotions(String filepath) throws Exception {
     durations.add(Float.parseFloat(parts[3]));
   }
   sc.close();
-  for (Integer[] ints: notes) {
-    int[] i = toIntArray(ints);
-    System.out.println(String.format("%d %d %d", i[0], i[1], i[2]));
-  }
-  System.out.println(durations.toString());
+  //for (Integer[] ints: notes) {
+  //  int[] i = toIntArray(ints);
+  //  System.out.println(String.format("%d %d %d", i[0], i[1], i[2]));
+  //}
+  //System.out.println(durations.toString());
   for (int i=0; i < durations.size()-1; i++) {
     int[] startNotes = toIntArray(notes.get(i));
     int[] endNotes = toIntArray(notes.get(i+1));
@@ -40,25 +40,4 @@ void midiToContrapuntalMotions(String filepath) throws Exception {
     );
   }
   
-}
-
-void bach_aof() {
-  int[] s1 = {45, 69, 77}; 
-  int[] s2 = {38, 66, 71};
-  int[] s3 = {40, 67, 70};
-  int[] s4 = {41, 64, 69}; //m. 184
-  int[] s5 = {41, 65, 74};
-  int[] s6 = {43, 63, 67};
-  int[] s7 = {45, 61, 67};
-  int[] s8 = {46, 62, 65};
-  
-  ContrapuntalMotion cm1 = new ContrapuntalMotion(s1, s2, Duration.Q);
-  ContrapuntalMotion cm2 = new ContrapuntalMotion(s2, s3, Duration.Q);
-  ContrapuntalMotion cm3 = new ContrapuntalMotion(s3, s4, Duration.Q);
-  ContrapuntalMotion cm4 = new ContrapuntalMotion(s4, s5, Duration.Q);
-  ContrapuntalMotion cm5 = new ContrapuntalMotion(s5, s6, Duration.Q);
-  ContrapuntalMotion cm6 = new ContrapuntalMotion(s6, s7, Duration.Q);
-  ContrapuntalMotion cm7 = new ContrapuntalMotion(s7, s8, Duration.Q);
-  
-  Collections.addAll(contrapuntalMotions, cm1, cm2, cm3, cm4, cm5, cm6, cm7);
 }
