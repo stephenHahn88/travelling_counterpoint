@@ -48,7 +48,7 @@ void setupGUI() {
   createBang("toggleGridBang", 30, 30, width-40, height-40, "Grid");
   createBang("toggleSphereBang", 30, 30, width-80, height-40, "Sphere");
   
-  createBang("clearBang", 30, 30, width-40, 40, "Clear");
+  createBang("clearBang", 30, 30, width-50, 20, "Clear");
 }
 
 void drawGUI() {
